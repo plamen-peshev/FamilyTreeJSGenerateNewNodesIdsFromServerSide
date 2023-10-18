@@ -1,0 +1,71 @@
+﻿@using FamilyTreeJSGenerateNewNodesIdsFromServerSide
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://balkan.app/js/FamilyTree.js"></script>
+
+
+    <style>
+
+        /*CSS*/
+        html, body {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        tree {
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="tree"></div>
+
+@*    <video width="600" autoplay controls style="position: fixed; left: 0; top: 0;">
+        <source src="screen-capture.webm" type="video/webm">
+    </video>*@
+
+    <script>
+        //JavaScript
+        var family = new FamilyTree(document.getElementById("tree"), {
+            mode: 'dark',
+            mouseScrool: FamilyTree.action.ctrlZoom,
+            nodeTreeMenu: true,
+            nodeBinding: {
+                field_0: "name",
+                field_1: "id",
+            }
+        });
+
+        family.onUpdateNode(function(args){
+            var that = this;
+            fetch('/home/update', {
+                method: 'POST',
+                body: JSON.stringify(args),
+                headers: { 'Content-Type': 'application/json' },
+            }).then(response => response.json()).then(function (oldId_newId) {
+                debugger;
+                that.replaceIds(oldId_newId);
+            });
+        });
+
+        family.load([
+            { id: 1, pids: [2], name: "Amber McKenzie", gender: "female" },
+            { id: 2, pids: [1], name: "Ava Field", gender: "male" },
+            { id: 3, mid: 1, fid: 2, name: "Peter Stevens", gender: "male" }
+        ]);
+
+    </script>
+</body>
+</html>
