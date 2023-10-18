@@ -15,6 +15,8 @@ namespace FamilyTreeJSGenerateNewNodesIdsFromServerSide.Controllers
         {
             System.Threading.Thread.Sleep(1000);
             var addNodesData = args.GetProperty("addNodesData").EnumerateArray();
+            //var updateNodesData = args.GetProperty("updateNodesData").EnumerateArray(); 
+            //update fid, mid and pids as well
 
             Random rnd = new Random();
 
