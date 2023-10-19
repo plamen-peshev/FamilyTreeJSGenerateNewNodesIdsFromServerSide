@@ -32,10 +32,6 @@
 <body>
     <div id="tree"></div>
 
-@*    <video width="600" autoplay controls style="position: fixed; left: 0; top: 0;">
-        <source src="screen-capture.webm" type="video/webm">
-    </video>*@
-
     <script>
         //JavaScript
         var family = new FamilyTree(document.getElementById("tree"), {
@@ -55,7 +51,6 @@
                 body: JSON.stringify(args),
                 headers: { 'Content-Type': 'application/json' },
             }).then(response => response.json()).then(function (oldId_newId) {
-                debugger;
                 that.replaceIds(oldId_newId);
             });
         });
